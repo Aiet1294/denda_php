@@ -1,0 +1,129 @@
+.produktuak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+.produktuak-section {
+    margin-bottom: 40px;
+}
+.produktu-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #e9ecef;
+    padding: 25px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.produktu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #dc3545;
+}
+.produktu-card h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 1.3em;
+}
+.produktu-card p {
+    margin: 8px 0;
+    font-size: 1em;
+}
+.produktu-image {
+    font-size: 4em;
+    text-align: center;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    box-shadow: 0 5px 20px rgba(220, 53, 69, 0.3);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.produktu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.produktu-image:hover {
+    transform: scale(1.1);
+}
+.produktu-description {
+    margin-bottom: 15px;
+}
+.produktu-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #28a745;
+}
+.produktu-stock {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.discount-text {
+    background: #dc3545;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.available-text {
+    background: #000000;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.prezio-marratua {
+    text-decoration: line-through;
+    color: #dc3545;
+    font-size: 1em;
+    margin-left: 10px;
+}
+.prezio-oraingoa {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #28a745;
+}
+.produktu-link {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+    margin-top: auto;
+}
+.produktu-link:hover {
+    background: linear-gradient(135deg, #bb2d3b 0%, #a02331 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+}
+.empty-state {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 30px;
+    background: rgba(108, 117, 125, 0.1);
+    border-radius: 8px;
+}

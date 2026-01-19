@@ -1,0 +1,105 @@
+@media (max-width: 767px) {
+    .nav {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+    .nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .nav li {
+        width: 100%;
+    }
+    .nav a {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 12px;
+    }
+    .header-title {
+        font-size: 1.8em;
+        text-align: center;
+        margin: 20px 0;
+    }
+    .kategoriak-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .produktuak-grid,
+    .produktuak-sareta {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .produktuak-flex {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .produktu-card {
+        min-width: auto;
+        width: 100%;
+        flex: none;
+    }
+    .kategoria-card {
+        padding: 15px;
+    }
+    .kategoria-header {
+        padding: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .kategoria-section,
+    .kategoria-section-flex {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+    .kategoria-header {
+        margin: -15px -15px 15px -15px;
+        padding: 15px;
+    }
+    .kategoria-header h2 {
+        font-size: 1.4em;
+        text-align: center;
+    }
+    .kategoria-estatistikak {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .stat-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+    .produktu-card-content {
+        padding: 15px;
+    }
+    .produktu-card h3 {
+        font-size: 1.2em;
+    }
+    .produktu-image {
+        height: 200px;
+    }
+    .back-button,
+    .home-button,
+    .kategoria-ikusi-btn,
+    .kategoriak-botoia,
+    .button {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+        font-size: 16px;
+        padding: 14px 20px;
+    }
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    .button-group .button {
+        margin: 5px 0;
+    }
+}

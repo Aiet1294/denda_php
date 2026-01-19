@@ -1,0 +1,9 @@
+RewriteEngine on
+
+RewriteRule  ^denda/produktuak$  denda/api/produktuak/index.php
+RewriteRule  ^denda/produktuak/nobedadeak$  denda/api/produktuak/index.php?mota=nobedadeak [L]
+RewriteRule  ^denda/produktuak/eskaintzak$  denda/api/produktuak/index.php?mota=eskaintzak [L]
+RewriteRule  ^denda/produktuak/(.*)$  denda/api/produktuak/index.php?id=$1
+
+RewriteRule  ^denda/kategoriak/(.*)$  denda/api/kategoriak/index.php?id=$1
+RewriteRule  ^denda/kategoriak$  denda/api/kategoriak/index.php

@@ -1,0 +1,113 @@
+CREATE TABLE Kategoriak (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    izena TEXT NOT NULL,
+    deskribapena TEXT,
+    sortze_data TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE Produktuak (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_kategoria INTEGER,
+    izena TEXT NOT NULL,
+    prezioa INTEGER,
+    deskontua INTEGER,
+    pisua INTEGER,
+    urtea INTEGER,
+    nobedadeak INTEGER NOT NULL DEFAULT 0 CHECK (nobedadeak IN (0, 1)), 
+    sortze_data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_kategoria) REFERENCES Kategoriak(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Mezuak (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    izena TEXT NOT NULL,
+    email TEXT NOT NULL,
+    mezua TEXT NOT NULL,
+    erantzunda INTEGER NOT NULL DEFAULT 0 CHECK (erantzunda IN (0, 1)),
+    sortze_data TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Eskariak (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    izena text not null,
+    abizena text not null,
+	helbidea text not null,
+	herria text not null,
+	postaKodea integer not null,
+	probintzia text not null,
+	emaila text not null,
+    data TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    balidatu INTEGER NOT NULL DEFAULT 0 CHECK (balidatu IN (0, 1))
+);
+
+CREATE TABLE Detaileak (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_eskaria INTEGER NOT NULL,
+    id_produktua INTEGER NOT NULL,
+    prezioa REAL NOT NULL,
+    kopurua INTEGER NOT NULL,
+    sortze_data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Configuración para borrar detalles si se borra el pedido
+    FOREIGN KEY (id_eskaria) REFERENCES Eskariak(id) 
+        ON DELETE CASCADE, 
+        
+    -- Configuración para PROHIBIR borrar el producto si está en un pedido
+    FOREIGN KEY (id_produktua) REFERENCES Produktuak(id) 
+        ON DELETE RESTRICT 
+);
+
+
+-- ----------------------------
+-- 1. KATEGORIAK TXERTATZEA
+-- ----------------------------
+
+INSERT INTO Kategoriak (izena, deskribapena)
+VALUES
+('Mankuernak', 'Esku bakarreko pisuak, indarra eta egonkortasuna lantzeko.'),
+('Barrak eta Diskoak', 'Pisu handiak altxatzeko barrak (olinpikoak, hexagonalak) eta pisu-diskoak.'),
+('Kettlebell-ak', 'Errusiar pisuak, mugimendu balistikoak eta erresistentzia lantzeko.'),
+('Bankuak', 'Entrenamendu banku erregulagarriak, lauak eta espezifikoak.'),
+('Rack-ak eta Makinak', 'Segurtasunez entrenatzeko potentzia-kaiolak, multipower makinak eta poleak.');
+
+
+-- ----------------------------
+-- 2. PRODUKTUAK TXERTATZEA (BERRIKUNTZA GABE)
+-- ----------------------------
+-- Oharra: id_kategoria (1=Mankuernak, 2=Barrak/Diskoak, 3=Kettlebell, 4=Bankuak, 5=Rack/Makinak)
+-- Zutabeak: id_kategoria, izena, prezioa, deskontua (%), pisua (kg), urtea
+
+INSERT INTO Produktuak (id_kategoria, izena, prezioa, deskontua, pisua, urtea)
+VALUES
+-- Kategoria 1: Mankuernak
+(1, 'Mankuerna hexagonala 10kg (parea)', 60, 0, 20, 2023),
+(1, 'Mankuerna erregulagarria (5-25kg)', 150, 10, 25, 2024),
+(1, 'Gomazko mankuerna biribila 15kg (unitatea)', 45, 0, 15, 2023),
+(1, 'Binilozko mankuerna multzoa (1-5kg)', 50, 0, 15, 2022),
+
+-- Kategoria 2: Barrak eta Diskoak
+(2, 'Barra Olinpikoa 20kg (220cm)', 180, 0, 20, 2024),
+(2, '"Bumper" disko parea 10kg', 70, 0, 20, 2023),
+(2, '"Bumper" disko parea 20kg', 130, 0, 40, 2023),
+(2, 'Barra Hexagonala (Trap Bar)', 160, 5, 25, 2023),
+(2, 'Barra Z (EZ Curl Bar)', 65, 0, 10, 2022),
+(2, 'Burdinazko disko parea 5kg', 30, 0, 10, 2022),
+
+-- Kategoria 3: Kettlebell-ak
+(3, 'Lehiaketako Kettlebell-a 16kg', 55, 0, 16, 2023),
+(3, 'Burdinurtuzko Kettlebell-a 12kg', 40, 0, 12, 2022),
+(3, 'Lehiaketako Kettlebell-a 24kg', 80, 0, 24, 2023),
+(3, 'Kettlebell erregulagarria (3-18kg)', 120, 15, 18, 2024),
+
+-- Kategoria 4: Bankuak
+(4, 'Banku erregulagarria (inklinatua/deklinatua)', 250, 0, 30, 2024),
+(4, 'Banku laua profesionala', 190, 0, 25, 2023),
+(4, 'Scott bankua (bicepsak lantzeko)', 140, 0, 22, 2022),
+
+-- Kategoria 5: Rack-ak eta Makinak
+(5, 'Potentzia kaiola (Power Rack)', 450, 0, 80, 2023),
+(5, 'Multipower makina (Smith Machine)', 800, 10, 150, 2024),
+(5, 'Polea altu/baxuko estazioa', 600, 0, 120, 2023);
