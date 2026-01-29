@@ -1,9 +1,9 @@
 RewriteEngine on
 
-RewriteRule  ^denda/produktuak$  denda/api/produktuak/index.php
-RewriteRule  ^denda/produktuak/nobedadeak$  denda/api/produktuak/index.php?mota=nobedadeak [L]
-RewriteRule  ^denda/produktuak/eskaintzak$  denda/api/produktuak/index.php?mota=eskaintzak [L]
-RewriteRule  ^denda/produktuak/(.*)$  denda/api/produktuak/index.php?id=$1
+RewriteRule  ^denda_php/produktuak$  denda_php/api/produktuak/index.php
+RewriteRule  ^denda_php/produktuak/nobedadeak$  denda_php/api/produktuak/index.php?mota=nobedadeak [L]
+RewriteRule  ^denda_php/produktuak/eskaintzak$  denda_php/api/produktuak/index.php?mota=eskaintzak [L]
+RewriteRule  ^denda_php/produktuak/(.*)$  denda_php/api/produktuak/index.php?id=$1
 
-RewriteRule  ^denda/kategoriak/(.*)$  denda/api/kategoriak/index.php?id=$1
-RewriteRule  ^denda/kategoriak$  denda/api/kategoriak/index.php
+RewriteRule  ^denda_php/kategoriak/(.*)$  denda_php/api/kategoriak/index.php?id=$1
+RewriteRule  ^denda_php/kategoriak$  denda_php/api/kategoriak/index.php

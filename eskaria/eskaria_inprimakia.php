@@ -73,6 +73,7 @@
                 <a href="../hasiera/index.php" class="nav-btn">🏠 Hasiera</a>
                 <a href="../admin/index.php" class="nav-btn admin">⚙️ Admin Gunea</a>
                 <a href="../katalogoa/index.php" class="nav-btn">📂 Katalogoa</a>
+                <a href="../katalogoa/index.php?vista=produktuak" class="nav-btn">📦 Produktuak</a>
                 <a href="../kontaktua/index.php" class="nav-btn">✉️ Kontaktua</a>
                 <a href="../mediateka/index.php" class="nav-btn">🖼️ Mediateka</a>
             </div>

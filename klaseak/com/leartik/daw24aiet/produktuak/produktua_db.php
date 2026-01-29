@@ -113,6 +113,66 @@ class ProduktuaDB {
         return $produktuak;
     }
 
+    public static function selectProduktuakByKategoriaAndTerm($id_kategoria, $term) {
+        $produktuak = [];
+        $sql = "SELECT * FROM Produktuak WHERE id_kategoria = ? AND izena LIKE ? ORDER BY izena";
+        
+        try {
+            $konexioa = self::getConnection();
+            if (!$konexioa) return $produktuak;
+            
+            $kontsulta = $konexioa->prepare($sql);
+            $kontsulta->execute([$id_kategoria, "%" . $term . "%"]);
+            
+            while ($emaitza = $kontsulta->fetch(PDO::FETCH_ASSOC)) {
+                $produktuak[] = new Produktua(
+                    $emaitza['id'],
+                    $emaitza['id_kategoria'],
+                    $emaitza['izena'],
+                    $emaitza['prezioa'],
+                    $emaitza['deskontua'],
+                    $emaitza['nobedadea'],
+                    $emaitza['pisua'],
+                    $emaitza['urtea'],
+                    $emaitza['sortze_data']
+                );
+            }
+        } catch (PDOException $e) {
+            error_log("Errorea produktuak bilatzean: " . $e->getMessage());
+        }
+        return $produktuak;
+    }
+
+    public static function selectProduktuakByTerm($term) {
+        $produktuak = [];
+        $sql = "SELECT * FROM Produktuak WHERE izena LIKE ? ORDER BY izena LIMIT 5";
+        
+        try {
+            $konexioa = self::getConnection();
+            if (!$konexioa) return $produktuak;
+            
+            $kontsulta = $konexioa->prepare($sql);
+            $kontsulta->execute(["%" . $term . "%"]);
+            
+            while ($emaitza = $kontsulta->fetch(PDO::FETCH_ASSOC)) {
+                $produktuak[] = new Produktua(
+                    $emaitza['id'],
+                    $emaitza['id_kategoria'],
+                    $emaitza['izena'],
+                    $emaitza['prezioa'],
+                    $emaitza['deskontua'],
+                    $emaitza['nobedadea'],
+                    $emaitza['pisua'],
+                    $emaitza['urtea'],
+                    $emaitza['sortze_data']
+                );
+            }
+        } catch (PDOException $e) {
+            error_log("Errorea produktuak bilatzean: " . $e->getMessage());
+        }
+        return $produktuak;
+    }
+
     public static function insertProduktu($produktua) {
         $sql = "INSERT INTO Produktuak (id_kategoria, izena, prezioa, deskontua, nobedadea, pisua, urtea) VALUES (?, ?, ?, ?, ?, ?, ?)";
         

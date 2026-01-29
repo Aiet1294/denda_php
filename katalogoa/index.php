@@ -53,10 +53,64 @@ switch ($vista) {
         
         foreach ($kategoriak as $kat) {
             $katProduktuak = ProduktuaDB::selectProduktuakKategoriarenArabera($kat->getId());
-            $kategoriaProductuak[$kat->getId()] = $katProduktuak;
+            if (!empty($katProduktuak)) {
+                $kategoriaProductuak[$kat->getId()] = $katProduktuak;
+            }
         }
         
+        $kategoriakFiltratuak = [];
+        foreach ($kategoriak as $k) {
+            if (isset($kategoriaProductuak[$k->getId()])) {
+                $kategoriakFiltratuak[] = $k;
+            }
+        }
+        $kategoriak = $kategoriakFiltratuak;
+        
         include 'produktuak_erakutsi.php';
+        break;
+
+    case 'ajax_bilatu':
+        $term = isset($_POST['term']) ? $_POST['term'] : '';
+        
+        $kategoriak = KategoriaDB::selectKategoriak();
+        $kategoriaProductuak = [];
+
+        foreach ($kategoriak as $kat) {
+            if (!empty($term)) {
+                $katProduktuak = ProduktuaDB::selectProduktuakByKategoriaAndTerm($kat->getId(), $term);
+            } else {
+                $katProduktuak = ProduktuaDB::selectProduktuakKategoriarenArabera($kat->getId());
+            }
+            
+            if (!empty($katProduktuak)) {
+                $kategoriaProductuak[$kat->getId()] = $katProduktuak;
+            }
+        }
+
+        $kategoriakFiltratuak = [];
+        foreach ($kategoriak as $k) {
+            if (isset($kategoriaProductuak[$k->getId()])) {
+                $kategoriakFiltratuak[] = $k;
+            }
+        }
+        $kategoriak = $kategoriakFiltratuak;
+        
+        $isAjax = true;
+        include 'produktuak_erakutsi.php';
+        break;
+
+    case 'ajax_proposamenak':
+        header('Content-Type: application/json');
+        $term = isset($_POST['term']) ? $_POST['term'] : '';
+        $names = [];
+
+        if (!empty($term)) {
+            $produktuak = ProduktuaDB::selectProduktuakByTerm($term);
+            foreach ($produktuak as $p) {
+                $names[] = $p->getIzena();
+            }
+        }
+        echo json_encode($names);
         break;
 
     case 'produktua':
