@@ -101,7 +101,7 @@
                             <div class="playlist-items">
                                 <button onclick="changeAudio('../audio/lightweight.m4a')" class="playlist-btn">🎵 Lightweight</button>
                                 <button onclick="changeAudio('../audio/musicagym.m4a')" class="playlist-btn">🎵 Gym Music</button>
-                                <button onclick="changeAudio('../audio/musicgym.m4a')" class="playlist-btn">🎵 Music Gym</button>
+                                <button onclick="changeAudio('../audio/musicgym.mp3')" class="playlist-btn">🎵 Music Gym</button>
                                 <button onclick="changeAudio('../audio/gymusic.mp3')" class="playlist-btn">🎵 Gymusic</button>
                             </div>
                         </div>

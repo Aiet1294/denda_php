@@ -2,7 +2,7 @@
 const playlistAudios = [
     '../audio/lightweight.m4a',
     '../audio/musicagym.m4a',
-    '../audio/musicgym.m4a',
+    '../audio/musicgym.mp3',
     '../audio/gymusic.mp3'
 ];
 let currentAudioIndex = 0;
