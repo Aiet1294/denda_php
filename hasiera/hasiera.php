@@ -39,23 +39,14 @@
                         <div class="produktu-card">
                             <div class="produktu-image">
                                 <?php
-                                $imagePathJpg = "../img/produktuak/" . $produktua['id'] . ".jpg";
-                                $imagePathPng = "../img/produktuak/" . $produktua['id'] . ".png";
-                                
-                                if (file_exists($imagePathJpg)): 
-                                    $imagePath = $imagePathJpg;
-                                elseif (file_exists($imagePathPng)):
-                                    $imagePath = $imagePathPng;
-                                else:
-                                    $imagePath = null;
-                                endif;
-                                
-                                if ($imagePath): 
+                                $s3BaseUrl = "https://aetxaburus3.s3.eu-south-2.amazonaws.com/produktuak/";
+                                $imagePathJpg = $s3BaseUrl . $produktua['id'] . ".jpg";
+                                $imagePathPng = $s3BaseUrl . $produktua['id'] . ".png";
                                 ?>
-                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo htmlspecialchars($produktua['izena']); ?>">
-                                <?php else: ?>
-                                    🏋️‍♂️
-                                <?php endif; ?>
+                                <img src="<?php echo $imagePathJpg; ?>" 
+                                     alt="<?php echo htmlspecialchars($produktua['izena']); ?>"
+                                     onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
+                                <span style="display:none; font-size: 3rem;">🏋️‍♂️</span>
                             </div>
                             <h3><?php echo htmlspecialchars($produktua['izena']); ?></h3>
                             <div class="produktu-description">
@@ -105,23 +96,14 @@
                         <div class="produktu-card">
                             <div class="produktu-image">
                                 <?php
-                                $imagePathJpg = "../img/produktuak/" . $produktua['id'] . ".jpg";
-                                $imagePathPng = "../img/produktuak/" . $produktua['id'] . ".png";
-                                
-                                if (file_exists($imagePathJpg)): 
-                                    $imagePath = $imagePathJpg;
-                                elseif (file_exists($imagePathPng)):
-                                    $imagePath = $imagePathPng;
-                                else:
-                                    $imagePath = null;
-                                endif;
-                                
-                                if ($imagePath): 
+                                $s3BaseUrl = "https://aetxaburus3.s3.eu-south-2.amazonaws.com/produktuak/";
+                                $imagePathJpg = $s3BaseUrl . $produktua['id'] . ".jpg";
+                                $imagePathPng = $s3BaseUrl . $produktua['id'] . ".png";
                                 ?>
-                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo htmlspecialchars($produktua['izena']); ?>">
-                                <?php else: ?>
-                                    🏋️‍♂️
-                                <?php endif; ?>
+                                <img src="<?php echo $imagePathJpg; ?>" 
+                                     alt="<?php echo htmlspecialchars($produktua['izena']); ?>"
+                                     onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
+                                <span style="display:none; font-size: 3rem;">🏋️‍♂️</span>
                             </div>
                             <h3><?php echo htmlspecialchars($produktua['izena']); ?></h3>
                             <div class="produktu-description">

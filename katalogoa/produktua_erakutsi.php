@@ -45,27 +45,17 @@ if (!isset($produktua)) {
             <div class="col-lg-6">
                 <div class="produktu-image-container">
                     <?php
-                    $imagePathJpg = "../img/produktuak/" . $produktua->getId() . ".jpg";
-                    $imagePathPng = "../img/produktuak/" . $produktua->getId() . ".png";
-                    
-                    if (file_exists($imagePathJpg)): 
-                        $imagePath = $imagePathJpg;
-                    elseif (file_exists($imagePathPng)):
-                        $imagePath = $imagePathPng;
-                    else:
-                        $imagePath = null;
-                    endif;
-                    
-                    if ($imagePath): 
+                    $s3BaseUrl = "https://aetxaburus3.s3.eu-south-2.amazonaws.com/produktuak/";
+                    $imagePathJpg = $s3BaseUrl . $produktua->getId() . ".jpg";
+                    $imagePathPng = $s3BaseUrl . $produktua->getId() . ".png";
                     ?>
-                        <img src="<?php echo $imagePath; ?>" 
-                            alt="<?php echo htmlspecialchars($produktua->getIzena()); ?>" 
-                            class="img-fluid">
-                    <?php else: ?>
-                        <div class="produktu-placeholder">
-                            🏋️‍♂️
-                        </div>
-                    <?php endif; ?>
+                    <img src="<?php echo $imagePathJpg; ?>" 
+                        alt="<?php echo htmlspecialchars($produktua->getIzena()); ?>" 
+                        class="img-fluid"
+                        onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='block'; }">
+                    <div class="produktu-placeholder" style="display:none;">
+                        🏋️‍♂️
+                    </div>
                 </div>
             </div>
 

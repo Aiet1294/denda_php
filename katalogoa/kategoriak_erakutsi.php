@@ -44,23 +44,14 @@
                         <div class="kategoria-header-section">
                             <div class="kategoriak-icon">
                                 <?php
-                                $imagePathJpg = "../img/kategoriak/" . $kategoria->getId() . ".jpg";
-                                $imagePathPng = "../img/kategoriak/" . $kategoria->getId() . ".png";
-                                
-                                if (file_exists($imagePathJpg)): 
-                                    $imagePath = $imagePathJpg;
-                                elseif (file_exists($imagePathPng)):
-                                    $imagePath = $imagePathPng;
-                                else:
-                                    $imagePath = null;
-                                endif;
-                                
-                                if ($imagePath): 
+                                $s3BaseUrl = "https://aetxaburus3.s3.eu-south-2.amazonaws.com/kategoriak/";
+                                $imagePathJpg = $s3BaseUrl . $kategoria->getId() . ".jpg";
+                                $imagePathPng = $s3BaseUrl . $kategoria->getId() . ".png";
                                 ?>
-                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo htmlspecialchars($kategoria->getIzena()); ?>">
-                                <?php else: ?>
-                                    📂
-                                <?php endif; ?>
+                                <img src="<?php echo $imagePathJpg; ?>" 
+                                     alt="<?php echo htmlspecialchars($kategoria->getIzena()); ?>"
+                                     onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
+                                <span style="display:none; font-size: 3rem;">📂</span>
                             </div>
                             <div class="kategoria-info">
                                 <h2><?php echo htmlspecialchars($kategoria->getIzena()); ?></h2>

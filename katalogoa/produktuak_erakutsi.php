@@ -119,23 +119,14 @@
                                         <div class="produktu-detail">
                                             <div class="produktu-image-large">
                                                 <?php
-                                                $imagePathJpg = "../img/produktuak/" . $produktua->getId() . ".jpg";
-                                                $imagePathPng = "../img/produktuak/" . $produktua->getId() . ".png";
-                                                
-                                                if (file_exists($imagePathJpg)): 
-                                                    $imagePath = $imagePathJpg;
-                                                elseif (file_exists($imagePathPng)):
-                                                    $imagePath = $imagePathPng;
-                                                else:
-                                                    $imagePath = null;
-                                                endif;
-                                                
-                                                if ($imagePath): 
+                                                $s3BaseUrl = "https://aetxaburus3.s3.eu-south-2.amazonaws.com/produktuak/";
+                                                $imagePathJpg = $s3BaseUrl . $produktua->getId() . ".jpg";
+                                                $imagePathPng = $s3BaseUrl . $produktua->getId() . ".png";
                                                 ?>
-                                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo htmlspecialchars($produktua->getIzena()); ?>">
-                                                <?php else: ?>
-                                                    🏋️‍♂️
-                                                <?php endif; ?>
+                                                <img src="<?php echo $imagePathJpg; ?>" 
+                                                     alt="<?php echo htmlspecialchars($produktua->getIzena()); ?>"
+                                                     onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
+                                                <span style="display:none; font-size: 3rem;">🏋️‍♂️</span>
                                             </div>
                                         </div>
                                         <h3><?php echo htmlspecialchars($produktua->getIzena()); ?></h3>
