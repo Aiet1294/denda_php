@@ -9,7 +9,7 @@ function mezuaBidali() {
         alert("Mesedez, bete formulario guztia.");
         return;
     } 
-    if (!pregmatch(/^[a-zA-Z\s]+$/, izena)) {
+    if (!/^[a-zA-Z\s]+$/.test(izena)) {
         alert("Mesedez, sartu baliozko izen bat (letrak eta espazioak soilik).");
         return;
     }

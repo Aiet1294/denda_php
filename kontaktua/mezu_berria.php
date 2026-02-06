@@ -8,10 +8,10 @@
     <link rel="icon" href="../img/logo.jpg" type="image/x-icon">
     <!-- CSS Modular -->
     <link rel="stylesheet" href="../css/oinarria.css">
-    <link rel="stylesheet" href="../css/contact.css">
+    <link rel="stylesheet" href="../css/kontaktua.css">
     <link rel="stylesheet" href="../css/mezua.css">
     <link rel="stylesheet" href="../css/erantzunkorra.css">
-    <script type="text/javascript" src="api.js"></script>
+    <script type="text/javascript" src="api.js?v=<?php echo time(); ?>"></script>
 </head>
 
 <body>
