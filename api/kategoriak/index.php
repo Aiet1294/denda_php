@@ -5,8 +5,11 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+require_once '../../db_config.php';
+
 try {
-    $db = new PDO('sqlite:../../db/denda.db');
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+    $db = new PDO($dsn, DB_USER, DB_PASS);
 // ... (el resto del código permanece igual)
 
     // GET eskaerak kudeatu
@@ -22,7 +25,7 @@ try {
                 exit;
             }
 
-            $sql = "SELECT * FROM kategoriak WHERE id=" . $id;
+            $sql = "SELECT * FROM Kategoriak WHERE id=" . $id;
             $erregistroak = $db->query($sql);
 
             if ($erregistroa = $erregistroak->fetch(PDO::FETCH_ASSOC)) {
@@ -38,7 +41,7 @@ try {
                 echo json_encode(['error' => 'Ez da aurkitu ' . $id . ' IDa duen kategoriarik.']);
             }
         } else {
-            $sql = "SELECT * FROM kategoriak ORDER BY id";
+            $sql = "SELECT * FROM Kategoriak ORDER BY id";
             $erregistroak = $db->query($sql);
 
             if($erregistroa = $erregistroak->fetch(PDO::FETCH_ASSOC)) {

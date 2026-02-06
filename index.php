@@ -1,5 +1,5 @@
 <?php
-define('DB_PATH', __DIR__ . '/db/denda.db');
+require_once __DIR__ . '/db_config.php';
 
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', 'admin');
@@ -9,15 +9,11 @@ define('APP_VERSION', '2.0');
 
 function getDbConnection() {
     try {
-        $dbDir = dirname(DB_PATH);
-        if (!is_dir($dbDir)) {
-            mkdir($dbDir, 0755, true);
-        }
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+        $pdo = new PDO($dsn, DB_USER, DB_PASS);
         
-        $pdo = new PDO('sqlite:' . DB_PATH);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $pdo->exec('PRAGMA foreign_keys = ON');
         
         return $pdo;
     } catch (PDOException $e) {

@@ -59,8 +59,8 @@
                             </div>
                             <h3><?php echo htmlspecialchars($produktua['izena']); ?></h3>
                             <div class="produktu-description">
-                                <strong>Nobedadea:</strong> 
-                                <?php echo $produktua['nobedadea'] ? 'Bai' : 'Ez'; ?><br>
+                                <strong>Nobedadeak:</strong> 
+                                <?php echo $produktua['nobedadeak'] ? 'Bai' : 'Ez'; ?><br>
                                 ⚖️ <?php echo $produktua['pisua']; ?> kg | 📅 <?php echo $produktua['urtea']; ?>
                             </div>
                             <div class="produktu-price">
@@ -125,8 +125,8 @@
                             </div>
                             <h3><?php echo htmlspecialchars($produktua['izena']); ?></h3>
                             <div class="produktu-description">
-                                <strong>Nobedadea:</strong> 
-                                <?php echo $produktua['nobedadea'] ? 'Bai' : 'Ez'; ?><br>
+                                <strong>Nobedadeak:</strong> 
+                                <?php echo $produktua['nobedadeak'] ? 'Bai' : 'Ez'; ?><br>
                                 ⚖️ <?php echo $produktua['pisua']; ?> kg | 📅 <?php echo $produktua['urtea']; ?>
                             </div>
                             <div class="produktu-price">

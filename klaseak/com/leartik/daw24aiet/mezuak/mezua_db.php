@@ -12,17 +12,7 @@ require_once dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/index.php'
 class MezuaDB {
 
     private static function getConnection() {
-        try {
-            $pdo = new PDO('sqlite:' . DB_PATH);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $pdo->exec('PRAGMA foreign_keys = ON');
-            
-            return $pdo;
-        } catch (PDOException $e) {
-            error_log("Konexio errorea: " . $e->getMessage());
-            return null;
-        }
+        return \getDbConnection();
     }
 
     public static function selectMezua($id) {

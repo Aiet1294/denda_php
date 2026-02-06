@@ -1,7 +1,10 @@
 <?php
 
+require_once '../../db_config.php';
+
 try {
-    $db = new PDO('sqlite:../../db/denda.db');
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+    $db = new PDO($dsn, DB_USER, DB_PASS);
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
@@ -15,7 +18,7 @@ try {
                 exit;
             }
 
-            $sql = "SELECT * FROM produktuak WHERE id=" . $_GET['id'];
+            $sql = "SELECT * FROM Produktuak WHERE id=" . $_GET['id'];
             $erregistroak = $db->query($sql);
 
             if ($erregistroa = $erregistroak->fetch(PDO::FETCH_ASSOC)) {
@@ -26,7 +29,7 @@ try {
                 $produktua['izena'] = $erregistroa['izena'];
                 $produktua['prezioa'] = $erregistroa['prezioa'];
                 $produktua['deskontua'] = $erregistroa['deskontua'];
-                $produktua['nobedadea'] = $erregistroa['nobedadea'];
+                $produktua['nobedadeak'] = $erregistroa['nobedadeak'];
                 $produktua['pisua'] = $erregistroa['pisua'];
                 $produktua['urtea'] = $erregistroa['urtea'];
                 $produktua['sortze_data'] = $erregistroa['sortze_data'];
@@ -38,11 +41,11 @@ try {
                 echo json_encode(['error' => 'Ez da aurkitu ' . $id . ' IDa duen albisterik.']);
             }
         } else {
-            $sql = "SELECT * FROM produktuak";
+            $sql = "SELECT * FROM Produktuak";
 
             if (isset($_GET['mota'])) {
                 if ($_GET['mota'] === 'nobedadeak') {
-                    $sql .= " WHERE nobedadea = 1";
+                    $sql .= " WHERE nobedadeak = 1";
                 } elseif ($_GET['mota'] === 'eskaintzak') {
                     $sql .= " WHERE deskontua > 0";
                 }
@@ -61,7 +64,7 @@ try {
                     $produktuak[$i]['izena'] = $erregistroa['izena'];
                     $produktuak[$i]['prezioa'] = $erregistroa['prezioa'];
                     $produktuak[$i]['deskontua'] = $erregistroa['deskontua'];
-                    $produktuak[$i]['nobedadea'] = $erregistroa['nobedadea'];
+                    $produktuak[$i]['nobedadeak'] = $erregistroa['nobedadeak'];
                     $produktuak[$i]['pisua'] = $erregistroa['pisua'];
                     $produktuak[$i]['urtea'] = $erregistroa['urtea'];
                     $produktuak[$i]['sortze_data'] = $erregistroa['sortze_data'];
@@ -93,21 +96,21 @@ try {
             $izena = $data['izena'];
             $prezioa = $data['prezioa'];
             $deskontua = isset($data['deskontua']) ? $data['deskontua'] : 0;
-            $nobedadea = isset($data['nobedadea']) ? $data['nobedadea'] : 0;
+            $nobedadeak = isset($data['nobedadeak']) ? $data['nobedadeak'] : (isset($data['nobedadea']) ? $data['nobedadea'] : 0);
             $pisua = isset($data['pisua']) ? $data['pisua'] : 0;
             $urtea = isset($data['urtea']) ? $data['urtea'] : date('Y');
 
             $sortze_data = date('Y-m-d H:i:s');
 
-            $sql = "INSERT INTO produktuak (id_kategoria, izena, prezioa, deskontua, nobedadea, pisua, urtea, sortze_data) 
-                    VALUES (:id_kategoria, :izena, :prezioa, :deskontua, :nobedadea, :pisua, :urtea, :sortze_data)";
+            $sql = "INSERT INTO Produktuak (id_kategoria, izena, prezioa, deskontua, nobedadeak, pisua, urtea, sortze_data) 
+                    VALUES (:id_kategoria, :izena, :prezioa, :deskontua, :nobedadeak, :pisua, :urtea, :sortze_data)";
 
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':id_kategoria', $id_kategoria);
             $stmt->bindParam(':izena', $izena);
             $stmt->bindParam(':prezioa', $prezioa);
             $stmt->bindParam(':deskontua', $deskontua);
-            $stmt->bindParam(':nobedadea', $nobedadea);
+            $stmt->bindParam(':nobedadeak', $nobedadeak);
             $stmt->bindParam(':pisua', $pisua);
             $stmt->bindParam(':urtea', $urtea);
             $stmt->bindParam(':sortze_data', $sortze_data);
@@ -157,16 +160,16 @@ try {
             $izena = $data['izena'];
             $prezioa = $data['prezioa'];
             $deskontua = isset($data['deskontua']) ? $data['deskontua'] : 0;
-            $nobedadea = isset($data['nobedadea']) ? $data['nobedadea'] : 0;
+            $nobedadeak = isset($data['nobedadeak']) ? $data['nobedadeak'] : (isset($data['nobedadea']) ? $data['nobedadea'] : 0);
             $pisua = isset($data['pisua']) ? $data['pisua'] : 0;
             $urtea = isset($data['urtea']) ? $data['urtea'] : date('Y');
 
-            $sql = "UPDATE produktuak SET 
+            $sql = "UPDATE Produktuak SET 
                         id_kategoria = :id_kategoria, 
                         izena = :izena, 
-                        prezioa = :prezioa, 
+                        prezioa = :prezioa,  
                         deskontua = :deskontua, 
-                        nobedadea = :nobedadea, 
+                        nobedadeak = :nobedadeak, 
                         pisua = :pisua, 
                         urtea = :urtea 
                     WHERE id = :id";
@@ -177,7 +180,7 @@ try {
             $stmt->bindParam(':izena', $izena);
             $stmt->bindParam(':prezioa', $prezioa);
             $stmt->bindParam(':deskontua', $deskontua);
-            $stmt->bindParam(':nobedadea', $nobedadea);
+            $stmt->bindParam(':nobedadeak', $nobedadeak);
             $stmt->bindParam(':pisua', $pisua);
             $stmt->bindParam(':urtea', $urtea);
 

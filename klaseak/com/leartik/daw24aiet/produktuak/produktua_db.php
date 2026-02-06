@@ -10,17 +10,7 @@ require_once dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/index.php'
 class ProduktuaDB {
 
     private static function getConnection() {
-        try {
-            $pdo = new PDO('sqlite:' . DB_PATH);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $pdo->exec('PRAGMA foreign_keys = ON');
-            
-            return $pdo;
-        } catch (PDOException $e) {
-            error_log("Konexio errorea: " . $e->getMessage());
-            return null;
-        }
+        return \getDbConnection();
     }
 
     public static function selectProduktu($id) {
@@ -41,7 +31,7 @@ class ProduktuaDB {
                     $emaitza['izena'],
                     $emaitza['prezioa'],
                     $emaitza['deskontua'],
-                    $emaitza['nobedadea'],
+                    $emaitza['nobedadeak'],
                     $emaitza['pisua'],
                     $emaitza['urtea'],
                     $emaitza['sortze_data']
@@ -71,7 +61,7 @@ class ProduktuaDB {
                     $emaitza['izena'],
                     $emaitza['prezioa'],
                     $emaitza['deskontua'],
-                    $emaitza['nobedadea'],
+                    $emaitza['nobedadeak'],
                     $emaitza['pisua'],
                     $emaitza['urtea'],
                     $emaitza['sortze_data']
@@ -101,7 +91,7 @@ class ProduktuaDB {
                     $emaitza['izena'],
                     $emaitza['prezioa'],
                     $emaitza['deskontua'],
-                    $emaitza['nobedadea'],
+                    $emaitza['nobedadeak'],
                     $emaitza['pisua'],
                     $emaitza['urtea'],
                     $emaitza['sortze_data']
@@ -131,7 +121,7 @@ class ProduktuaDB {
                     $emaitza['izena'],
                     $emaitza['prezioa'],
                     $emaitza['deskontua'],
-                    $emaitza['nobedadea'],
+                    $emaitza['nobedadeak'],
                     $emaitza['pisua'],
                     $emaitza['urtea'],
                     $emaitza['sortze_data']
@@ -161,7 +151,7 @@ class ProduktuaDB {
                     $emaitza['izena'],
                     $emaitza['prezioa'],
                     $emaitza['deskontua'],
-                    $emaitza['nobedadea'],
+                    $emaitza['nobedadeak'],
                     $emaitza['pisua'],
                     $emaitza['urtea'],
                     $emaitza['sortze_data']
@@ -174,7 +164,7 @@ class ProduktuaDB {
     }
 
     public static function insertProduktu($produktua) {
-        $sql = "INSERT INTO Produktuak (id_kategoria, izena, prezioa, deskontua, nobedadea, pisua, urtea) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO Produktuak (id_kategoria, izena, prezioa, deskontua, nobedadeak, pisua, urtea) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try {
             $konexioa = self::getConnection();
@@ -202,7 +192,7 @@ class ProduktuaDB {
     }
 
     public static function updateProduktu($produktua) {
-        $sql = "UPDATE Produktuak SET id_kategoria = ?, izena = ?, prezioa = ?, deskontua = ?, nobedadea = ?, pisua = ?, urtea = ? WHERE id = ?";
+        $sql = "UPDATE Produktuak SET id_kategoria = ?, izena = ?, prezioa = ?, deskontua = ?, nobedadeak = ?, pisua = ?, urtea = ? WHERE id = ?";
         
         try {
             $konexioa = self::getConnection();

@@ -10,24 +10,7 @@ require_once dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/index.php'
 class KategoriaDB {
 
     private static function getConnection() {
-        try {
-            $pdo = new PDO('sqlite:' . DB_PATH);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            
-            
-            $check = $pdo->query("PRAGMA foreign_keys")->fetch();
-            if (!$check['foreign_keys']) {
-                error_log("KONTUZ: Ezin izan dira foreign key-ak aktibatu");
-            } else {
-                error_log("Foreign key-ak ondo aktibatuta daude");
-            }
-            
-            return $pdo;
-        } catch (PDOException $e) {
-            error_log("Konexio errorea: " . $e->getMessage());
-            return null;
-        }
+        return \getDbConnection();
     }
 
     public static function selectKategoria($id) {
