@@ -73,6 +73,67 @@ class ProduktuaDB {
         return $produktuak;
     }
 
+    public static function selectNobedadeak($limitea = 6) {
+        $produktuak = [];
+        $sql = "SELECT * FROM Produktuak WHERE nobedadeak = 1 LIMIT " . (int)$limitea;
+        
+        try {
+            $konexioa = self::getConnection();
+            if (!$konexioa) return $produktuak;
+            
+            $kontsulta = $konexioa->prepare($sql);
+            $kontsulta->execute();
+            
+            while ($emaitza = $kontsulta->fetch(PDO::FETCH_ASSOC)) {
+                $produktuak[] = new Produktua(
+                    $emaitza['id'],
+                    $emaitza['id_kategoria'],
+                    $emaitza['izena'],
+                    $emaitza['prezioa'],
+                    $emaitza['deskontua'],
+                    $emaitza['nobedadeak'],
+                    $emaitza['pisua'],
+                    $emaitza['urtea'],
+                    $emaitza['sortze_data']
+                );
+            }
+        } catch (PDOException $e) {
+            error_log("Errorea nobedadeak lortzean: " . $e->getMessage());
+        }
+        return $produktuak;
+    }
+
+    public static function selectEskaintzak($limitea = 6) {
+        $produktuak = [];
+        $sql = "SELECT * FROM Produktuak WHERE deskontua > 0 LIMIT " . (int)$limitea;
+        
+        try {
+            $konexioa = self::getConnection();
+            if (!$konexioa) return $produktuak;
+            
+            $kontsulta = $konexioa->prepare($sql);
+            $kontsulta->execute();
+            
+            while ($emaitza = $kontsulta->fetch(PDO::FETCH_ASSOC)) {
+                $produktuak[] = new Produktua(
+                    $emaitza['id'],
+                    $emaitza['id_kategoria'],
+                    $emaitza['izena'],
+                    $emaitza['prezioa'],
+                    $emaitza['deskontua'],
+                    $emaitza['nobedadeak'],
+                    $emaitza['pisua'],
+                    $emaitza['urtea'],
+                    $emaitza['sortze_data']
+                );
+            }
+        } catch (PDOException $e) {
+            error_log("Errorea eskaintzak lortzean: " . $e->getMessage());
+        }
+        return $produktuak;
+    }
+
+
     public static function selectProduktuakKategoriarenArabera($id_kategoria) {
         $produktuak = [];
         $sql = "SELECT * FROM Produktuak WHERE id_kategoria = ? ORDER BY izena";
