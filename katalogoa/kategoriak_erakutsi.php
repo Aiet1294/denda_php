@@ -16,7 +16,7 @@
     <div class="container">
         <header style="position: relative;">
             <div class="logo-link">
-                <img src="../img/logo.jpg" alt="logoa">
+                <img src="https://aetxaburus3.s3.eu-south-2.amazonaws.com/logo.jpg" alt="logoa">
                 <h1 class="logo">GimFit Store®</h1>
             </div>
             <a href="../saskia/index.php" class="nav-btn" style="position: absolute; top: 40px; right: 40px;">🛒 Saskia</a>
