@@ -8,7 +8,6 @@ require_once '../klaseak/com/leartik/daw24aiet/produktuak/produktua_db.php';
 
 use com\leartik\daw24aiet\produktuak\ProduktuaDB;
 
-// Helper function to convert Produktua objects to arrays for the view
 function produktuaToArray($obj) {
     return [
         'id' => $obj->getId(),

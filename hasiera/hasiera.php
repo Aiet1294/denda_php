@@ -45,8 +45,8 @@
                                 $imagePathPng = $s3BaseUrl . $produktua['id'] . ".png";
                                 ?>
                                 <img src="<?php echo $imagePathJpg; ?>" 
-                                     alt="<?php echo htmlspecialchars($produktua['izena']); ?>"
-                                     onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
+                                    alt="<?php echo htmlspecialchars($produktua['izena']); ?>"
+                                    onerror="if (this.src.endsWith('.jpg')) { this.src = '<?php echo $imagePathPng; ?>'; } else { this.style.display='none'; this.nextElementSibling.style.display='inline'; }">
                                 <span style="display:none; font-size: 3rem;">🏋️‍♂️</span>
                             </div>
                             <h3><?php echo htmlspecialchars($produktua['izena']); ?></h3>
