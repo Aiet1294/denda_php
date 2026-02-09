@@ -79,6 +79,7 @@
                 <a href="index.php" class="nav-btn active">📰 Albisteak</a>
                 <a href="../kontaktua/index.php" class="nav-btn">✉️ Kontaktua</a>
                 <a href="../mediateka/index.php" class="nav-btn">🖼️ Mediateka</a>
+                <a href="../txatbot/index.php" class="nav-btn">🤖 Txatbota</a>
             </div>
         </header>
 
