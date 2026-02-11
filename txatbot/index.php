@@ -17,11 +17,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!isset($_SESSION['txataren_mezuak'])) {
         $_SESSION['txataren_mezuak'] = [];
     }
+
+    // Datu basearekin konexioa kategoriak lortzeko
+    $db = getDbConnection();
+    $kategoriakZerrenda = "";
+    if ($db) {
+        $stmtKat = $db->query("SELECT izena FROM Kategoriak");
+        if ($stmtKat) {
+            $kategoriak = $stmtKat->fetchAll(PDO::FETCH_COLUMN);
+            $kategoriakZerrenda = implode(", ", $kategoriak);
+        }
+    }
     
     // 1. URRATSA: Iragazkiak atera
     $systemPrompt1 = "Zure lana denda bateko produktuen bilaketa-iragazkiak JSON formatuan itzultzea da.
     Eremuak: izena, kategoria, prezio_min, prezio_max, urtea_min, urtea_max.
-    Balorerik ez badago, null erabili. Ez sartu testu gehigarririk, soilik JSON objektua.";
+    Balorerik ez badago, null erabili. Ez sartu testu gehigarririk, soilik JSON objektua.
+    
+    Erabilgarri dauden kategoriak: [$kategoriakZerrenda]. Saiatu 'kategoria' eremua hauetako batekin betetzen badagokio.";
 
     $messages1 = [
         ["role" => "system", "content" => $systemPrompt1],
@@ -95,9 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $messages2 = $_SESSION['txataren_mezuak'];
     $messages2[] = [
         "role" => "system", 
-        "content" => "Erabiltzaileak egindako galderari erantzun, beheko produktu zerrendan oinarrituta. " .
-                    "Zerrendan produkturik ez badago, adierazi ez duzula ezer aurkitu. " .
-                    "Erantzun euskaraz, modu atseginean. Hona hemen aurkitutako produktuak:\n" . $produktuakTestua
+        "content" => "Gimnasio denda bateko laguntzaile birtuala zara. Zure helburua erabiltzaileari laguntzea da, BAINA SOILIK behean emandako produktu zerrendan oinarrituta.\n" .
+                    "ARAUAK:\n" .
+                    "1. Erabiltzaileak zerrendan ez dauden produktuei buruz edo gai orokorrei buruz (historia, politika, zientzia...) galdetzen badu, erantzun adeitasunez: 'Barkatu, baina dendako produktuei buruz bakarrik lagun zaitzaket.'\n" .
+                    "2. Ez asmatu informaziorik. Zerrendan agertzen ez den ezer ez aipatu.\n" .
+                    "3. Zerrenda hutsik badago, esan ez duzula irizpide horiekin bat datorren produkturik aurkitu.\n" .
+                    "4. Erantzun beti euskaraz eta modu laburrean.\n\n" .
+                    "Hona hemen aurkitutako produktuak:\n" . $produktuakTestua
     ];
 
     $botErantzuna = callOpenAI($messages2, $apiKey, false);
