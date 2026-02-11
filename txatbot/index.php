@@ -2,7 +2,12 @@
 session_start();
 require_once '../index.php'; // Konexioa lortzeko (Ensure this path is correct relative to txatbot folder)
 
-$apiKey = getenv('OPENAI_API_KEY'); // Ziurtatu ingurune aldagaia definituta dagoela edo jarri gakoa hemen
+$apiKey = getenv('OPENAI_API_KEY');
+
+if (!$apiKey) {
+    // Saiatu beste ingurune aldagai batzuekin (batzuetan zerbitzariaren arabera aldatzen da)
+    $apiKey = $_ENV['OPENAI_API_KEY'] ?? $_SERVER['OPENAI_API_KEY'] ?? null;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: text/plain');
