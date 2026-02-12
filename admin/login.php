@@ -16,6 +16,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .login-container {
             background: white;
             padding: 40px;
@@ -24,24 +25,29 @@
             width: 100%;
             max-width: 400px;
         }
+
         .login-header {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .login-header h1 {
             color: #333;
             margin: 0;
             font-size: 28px;
         }
+
         .login-header p {
             color: #666;
             margin: 10px 0 0 0;
             font-size: 14px;
         }
+
         .form-group {
             margin-bottom: 20px;
             position: relative;
         }
+
         .form-group input {
             width: 100%;
             padding: 12px 15px;
@@ -51,10 +57,12 @@
             transition: border-color 0.3s ease;
             box-sizing: border-box;
         }
+
         .form-group input:focus {
             outline: none;
             border-color: #667eea;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
@@ -62,6 +70,7 @@
             font-weight: 500;
             font-size: 14px;
         }
+
         input[type="text"] {
             width: 100%;
             padding: 12px 15px;
@@ -71,10 +80,12 @@
             transition: border-color 0.3s ease;
             box-sizing: border-box;
         }
+
         input[type="text"]:focus {
             outline: none;
             border-color: #667eea;
         }
+
         .submit-btn {
             width: 100%;
             padding: 12px;
@@ -87,10 +98,12 @@
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
+
         .error-message {
             background-color: #f8d7da;
             color: #721c24;
@@ -100,18 +113,22 @@
             margin-bottom: 20px;
             font-size: 14px;
         }
+
         .back-link {
             text-align: center;
             margin-top: 20px;
         }
+
         .back-link a {
             color: #667eea;
             text-decoration: none;
             font-size: 14px;
         }
+
         .back-link a:hover {
             text-decoration: underline;
         }
+
         .credentials {
             background-color: #e7f3ff;
             border: 1px solid #b3d9ff;
@@ -121,6 +138,7 @@
             font-size: 13px;
             color: #0c5aa6;
         }
+
         .credentials strong {
             display: block;
             margin-bottom: 5px;
@@ -156,6 +174,11 @@
             <div class="form-group">
                 <label for="pasahitza">Pasahitza</label>
                 <input type="password" name="pasahitza" id="pasahitza">
+            </div>
+
+            <div class="form-group">
+                <label>Ebatzi eragiketa: <?php echo $captcha_tetsua; ?> = ?</label>
+                <input type="number" name="captcha" required class="form-control" placeholder="Emaitza">
             </div>
 
             <button type="submit" name="sartu" class="submit-btn">
