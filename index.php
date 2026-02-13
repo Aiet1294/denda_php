@@ -50,7 +50,7 @@ function safe($testua) {
     return htmlspecialchars($testua, ENT_QUOTES, 'UTF-8');
 }
 
-if (basename($_SERVER['PHP_SELF']) === 'index.php' && dirname($_SERVER['PHP_SELF']) === '/denda_php') {
+if (basename($_SERVER['PHP_SELF']) === 'index.php' && (dirname($_SERVER['PHP_SELF']) === '/denda_php' || dirname($_SERVER['PHP_SELF']) === '/')) {
     header('Location: hasiera/index.php');
     exit();
 }
