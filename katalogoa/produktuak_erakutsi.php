@@ -176,35 +176,85 @@
     </div>
 
     <script>
-        $('#bilatzailea').on('input', function(){
-    var term = $(this).val();
-    
-    if(term.length > 0) {
-        // LLAMADA A LAMBDA (Para cumplir la auditoría y CloudWatch)
+        $(document).ready(function(){
+            
+    $('#bilatzailea').on('input', function(){
+        var term = $(this).val();
+        
+        // --- PASO 1: LLAMADA A LAMBDA (Auditoría Técnica) ---
+        // Esto deja el rastro en CloudWatch
         $.ajax({
-            url: 'https://kcibfbuocmapkekristvjwaeh40pitec.lambda-url.us-east-1.on.aws/',
+            url: 'https://kcibfbuocmapkekristvjwaeh40pitec.lambda-url.us-east-1.on.aws/', // Tu URL real
             method: 'POST',
+            contentType: 'application/json',
             data: JSON.stringify({term: term}),
             success: function(lambdaRes){
-                console.log("Lambda dice: " + lambdaRes.message);
+                console.log("Lambda dice: " + lambdaRes.message); // Confirmación en consola
+
+                // --- PASO 2: LOGICA DE TU TIENDA (Original) ---
+                // Una vez que la Lambda confirma, ejecutamos tus filtros normales
                 
-                // Si la Lambda responde, ejecutamos tu filtro real de PHP
+                // A) Filtrar la lista visual de productos (Esto es lo que te faltaba)
                 $.ajax({
-                    url: 'index.php?vista=ajax_proposamenak',
+                    url: 'index.php?vista=ajax_bilatu',
                     method: 'POST',
                     data: {term: term},
-                    dataType: 'json',
                     success: function(response){
-                        var html = '';
-                        $.each(response, function(index, value){
-                            html += '<div class="proposamen-item">' + value + '</div>';
-                        });
-                        $('#proposamenak').html(html).show();
+                        $('#produktuak-zerrenda').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error filtro productos: " + error);
                     }
                 });
+
+                // B) Mostrar el desplegable de sugerencias
+                if(term.length > 0) {
+                    $.ajax({
+                        url: 'index.php?vista=ajax_proposamenak',
+                        method: 'POST',
+                        data: {term: term},
+                        dataType: 'json',
+                        success: function(response){
+                            var html = '';
+                            if(response.length > 0) {
+                                $.each(response, function(index, value){
+                                    html += '<div class="proposamen-item">' + value + '</div>';
+                                });
+                                $('#proposamenak').html(html).show();
+                            } else {
+                                $('#proposamenak').hide();
+                            }
+                        }
+                    });
+                } else {
+                    $('#proposamenak').hide();
+                }
+            },
+            error: function(err) {
+                // Si la Lambda falla, seguimos filtrando para no romper la web
+                console.warn("Lambda error (pero seguimos):", err);
+                // Aquí podrías repetir el código de filtrado si quisieras que funcione sin Lambda
             }
         });
-    }
+    });
+
+    // --- PASO 3: DETECTAR EL CLICK EN UNA SUGERENCIA ---
+    // Este trozo es vital para que al pulsar en "Banku..." se seleccione
+    $(document).on('click', '.proposamen-item', function(){
+        var selectedText = $(this).text();
+        $('#bilatzailea').val(selectedText); // Pone el texto en el buscador
+        $('#proposamenak').hide();           // Oculta la lista
+        
+        // Dispara el evento 'input' para que se ejecute la búsqueda (y la Lambda) de nuevo con el término completo
+        $('#bilatzailea').trigger('input'); 
+    });
+
+    // Ocultar sugerencias al hacer click fuera
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.search-wrapper').length) {
+            $('#proposamenak').hide();
+        }
+    });
 });
     </script>
 </body>
