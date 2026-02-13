@@ -176,63 +176,36 @@
     </div>
 
     <script>
-        $(document).ready(function(){
-            
-            $('#bilatzailea').on('input', function(){
-                var term = $(this).val();
+        $('#bilatzailea').on('input', function(){
+    var term = $(this).val();
+    
+    if(term.length > 0) {
+        // LLAMADA A LAMBDA (Para cumplir la auditoría y CloudWatch)
+        $.ajax({
+            url: 'https://kcibfbuocmapkekristvjwaeh40pitec.lambda-url.us-east-1.on.aws/',
+            method: 'POST',
+            data: JSON.stringify({term: term}),
+            success: function(lambdaRes){
+                console.log("Lambda dice: " + lambdaRes.message);
                 
+                // Si la Lambda responde, ejecutamos tu filtro real de PHP
                 $.ajax({
-                    url: 'index.php?vista=ajax_bilatu',
+                    url: 'index.php?vista=ajax_proposamenak',
                     method: 'POST',
                     data: {term: term},
+                    dataType: 'json',
                     success: function(response){
-                        $('#produktuak-zerrenda').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Errorea (filter): " + status + " " + error);
+                        var html = '';
+                        $.each(response, function(index, value){
+                            html += '<div class="proposamen-item">' + value + '</div>';
+                        });
+                        $('#proposamenak').html(html).show();
                     }
                 });
-
-                if(term.length > 0) {
-                    $.ajax({
-                        url: 'index.php?vista=ajax_proposamenak',
-                        method: 'POST',
-                        data: {term: term},
-                        dataType: 'json',
-                        success: function(response){
-                            var html = '';
-                            if(response.length > 0) {
-                                $.each(response, function(index, value){
-                                    html += '<div class="proposamen-item">' + value + '</div>';
-                                });
-                                $('#proposamenak').html(html).show();
-                            } else {
-                                $('#proposamenak').hide();
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("AJAX Errorea (sugestions): " + status + " " + error);
-                        }
-                    });
-                } else {
-                    $('#proposamenak').hide();
-                }
-            });
-
-            $(document).on('click', '.proposamen-item', function(){
-                var selectedText = $(this).text();
-                $('#bilatzailea').val(selectedText);
-                $('#proposamenak').hide();
-                
-                $('#bilatzailea').trigger('input');
-            });
-
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.search-wrapper').length) {
-                    $('#proposamenak').hide();
-                }
-            });
+            }
         });
+    }
+});
     </script>
 </body>
 </html>
