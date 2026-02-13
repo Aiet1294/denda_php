@@ -180,21 +180,15 @@
             
     $('#bilatzailea').on('input', function(){
         var term = $(this).val();
-        
-        // --- PASO 1: LLAMADA A LAMBDA (Auditoría Técnica) ---
-        // Esto deja el rastro en CloudWatch
+
         $.ajax({
-            url: 'https://kcibfbuocmapkekristvjwaeh40pitec.lambda-url.us-east-1.on.aws/', // Tu URL real
+            url: 'https://kcibfbuocmapkekristvjwaeh40pitec.lambda-url.us-east-1.on.aws/',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({term: term}),
             success: function(lambdaRes){
-                console.log("Lambda dice: " + lambdaRes.message); // Confirmación en consola
+                console.log("Lambda dice: " + lambdaRes.message); 
 
-                // --- PASO 2: LOGICA DE TU TIENDA (Original) ---
-                // Una vez que la Lambda confirma, ejecutamos tus filtros normales
-                
-                // A) Filtrar la lista visual de productos (Esto es lo que te faltaba)
                 $.ajax({
                     url: 'index.php?vista=ajax_bilatu',
                     method: 'POST',
@@ -207,7 +201,6 @@
                     }
                 });
 
-                // B) Mostrar el desplegable de sugerencias
                 if(term.length > 0) {
                     $.ajax({
                         url: 'index.php?vista=ajax_proposamenak',
@@ -231,25 +224,19 @@
                 }
             },
             error: function(err) {
-                // Si la Lambda falla, seguimos filtrando para no romper la web
                 console.warn("Lambda error (pero seguimos):", err);
-                // Aquí podrías repetir el código de filtrado si quisieras que funcione sin Lambda
             }
         });
     });
 
-    // --- PASO 3: DETECTAR EL CLICK EN UNA SUGERENCIA ---
-    // Este trozo es vital para que al pulsar en "Banku..." se seleccione
     $(document).on('click', '.proposamen-item', function(){
         var selectedText = $(this).text();
-        $('#bilatzailea').val(selectedText); // Pone el texto en el buscador
-        $('#proposamenak').hide();           // Oculta la lista
+        $('#bilatzailea').val(selectedText);
+        $('#proposamenak').hide();
         
-        // Dispara el evento 'input' para que se ejecute la búsqueda (y la Lambda) de nuevo con el término completo
-        $('#bilatzailea').trigger('input'); 
+        $('#bilatzailea').trigger('input');
     });
 
-    // Ocultar sugerencias al hacer click fuera
     $(document).on('click', function(e) {
         if (!$(e.target).closest('.search-wrapper').length) {
             $('#proposamenak').hide();
